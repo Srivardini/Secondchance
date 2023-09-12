@@ -1,28 +1,36 @@
 # Determine Andromeda location in ra/dec degrees
+from math import cos,sin,pi
+from random import uniform
+
 
 # from wikipedia
-ra = '00:42:44.3'
-dec = '41:16:09'
+def clip_to_radius():
+    pass
 
-# convert to decimal degrees
-from math import cos,sin,pi
+def generate_sky_pos():
 
-d, m, s = dec.split(':')
-dec = int(d)+int(m)/60+float(s)/3600
+    ra = '00:42:44.3'
+    dec = '41:16:09'
 
-h, m, s = ra.split(':')
-ra = 15*(int(h)+int(m)/60+float(s)/3600)
-ra = ra/cos(dec*pi/180)
+    # convert to decimal degrees
 
-nsrc = 1_000_000
 
-# make 1000 stars within 1 degree of Andromeda
-from random import uniform
-ras = []
-decs = []
-for i in range(nsrc):
-    ras.append(ra + uniform(-1,1))
-    decs.append(dec + uniform(-1,1))
+    d, m, s = dec.split(':')
+    dec = int(d)+int(m)/60+float(s)/3600
+
+    h, m, s = ra.split(':')
+    ra = 15*(int(h)+int(m)/60+float(s)/3600)
+    ra = ra/cos(dec*pi/180)
+
+    nsrc = 1_000_000
+
+    # make 1000 stars within 1 degree of Andromeda
+
+    ras = []
+    decs = []
+    for i in range(nsrc):
+        ras.append(ra + uniform(-1,1))
+        decs.append(dec + uniform(-1,1))
 
 
 # now write these to a csv file for use by my other program
